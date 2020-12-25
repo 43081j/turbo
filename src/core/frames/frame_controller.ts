@@ -147,10 +147,12 @@ export class FrameController implements FetchRequestDelegate, FormInterceptorDel
     let element
     const id = CSS.escape(this.id)
 
+    // eslint-disable-next-line no-cond-assign
     if (element = activateElement(container.querySelector(`turbo-frame#${id}`))) {
       return element
     }
 
+    // eslint-disable-next-line no-cond-assign
     if (element = activateElement(container.querySelector(`turbo-frame[src][recurse~=${id}]`))) {
       await element.loaded
       return await this.extractForeignFrameElement(element)

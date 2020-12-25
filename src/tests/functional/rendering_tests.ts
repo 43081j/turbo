@@ -111,7 +111,7 @@ export class RenderingTests extends TurboDriveTestCase {
   }
 
   async "test preserves permanent elements"() {
-    let permanentElement = await this.permanentElement
+    const permanentElement = await this.permanentElement
     this.assert.equal(await permanentElement.getVisibleText(), "Rendering")
 
     this.clickSelector("#permanent-element-link")
@@ -174,7 +174,7 @@ export class RenderingTests extends TurboDriveTestCase {
   }
 
   async modifyBodyBeforeCaching() {
-    return this.remote.execute(() => addEventListener("turbo:before-cache", function eventListener(event) {
+    return this.remote.execute(() => addEventListener("turbo:before-cache", function eventListener() {
       removeEventListener("turbo:before-cache", eventListener, false)
       document.body.innerHTML = "Modified"
     }, false))
@@ -182,7 +182,7 @@ export class RenderingTests extends TurboDriveTestCase {
 
   async beforeCache(callback: (body: HTMLElement) => void) {
     return this.remote.execute((callback: (body: HTMLElement) => void) => {
-      addEventListener("turbo:before-cache", function eventListener(event) {
+      addEventListener("turbo:before-cache", function eventListener() {
         removeEventListener("turbo:before-cache", eventListener, false)
         callback(document.body)
       }, false)

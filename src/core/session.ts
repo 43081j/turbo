@@ -15,7 +15,7 @@ import { dispatch } from "../util"
 import { View } from "./drive/view"
 import { Visit, VisitOptions } from "./drive/visit"
 
-export type TimingData = {}
+export type TimingData = Record<string, unknown>
 
 export class Session implements NavigatorDelegate {
   readonly navigator = new Navigator(this)

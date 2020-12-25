@@ -26,6 +26,7 @@ export class StreamElement extends HTMLElement {
   }
 
   disconnect() {
+    // eslint-disable-next-line no-empty
     try { this.remove() } catch {}
   }
 
