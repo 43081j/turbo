@@ -3,6 +3,24 @@ import { nextAnimationFrame } from "../util"
 
 // <turbo-stream action=replace target=id><template>...
 
+/**
+ * Renders updates to the page from messages of a web socket.
+ *
+ * Using the `action` attribute, this can be configured one of four ways:
+ *
+ * - `append` - appends the result to the container
+ * - `prepend` - prepends the result to the container
+ * - `replace` - replaces the contents of the container
+ * - `remove` - removes the container
+ *
+ * @customElement turbo-stream
+ * @example
+ *   <turbo-stream action="append" target="dom_id">
+ *     <template>
+ *       Content to append to container designated with the dom_id.
+ *     </template>
+ *   </turbo-stream>
+ */
 export class StreamElement extends HTMLElement {
   async connectedCallback() {
     try {
@@ -29,6 +47,9 @@ export class StreamElement extends HTMLElement {
     try { this.remove() } catch {}
   }
 
+  /**
+   * Gets the action function to be performed.
+   */
   get performAction() {
     if (this.action) {
       const actionFunction = StreamActions[this.action]
@@ -40,6 +61,9 @@ export class StreamElement extends HTMLElement {
     this.raise("action attribute is missing")
   }
 
+  /**
+   * Gets the target element which the template will be rendered to.
+   */
   get targetElement() {
     if (this.target) {
       return this.ownerDocument?.getElementById(this.target)
@@ -47,10 +71,16 @@ export class StreamElement extends HTMLElement {
     this.raise("target attribute is missing")
   }
 
+  /**
+   * Gets the contents of the main `<template>`.
+   */
   get templateContent() {
     return this.templateElement.content
   }
 
+  /**
+   * Gets the main `<template>` used for rendering
+   */
   get templateElement() {
     if (this.firstElementChild instanceof HTMLTemplateElement) {
       return this.firstElementChild
@@ -58,10 +88,17 @@ export class StreamElement extends HTMLElement {
     this.raise("first child element must be a <template> element")
   }
 
+  /**
+   * Gets the current action.
+   */
   get action() {
     return this.getAttribute("action")
   }
 
+  /**
+   * Gets the current target (an element ID) to which the result will
+   * be rendered.
+   */
   get target() {
     return this.getAttribute("target")
   }
